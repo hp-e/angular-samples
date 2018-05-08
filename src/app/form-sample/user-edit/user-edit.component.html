@@ -9,39 +9,51 @@
       <div class="control">
         <input class="input" type="text" placeholder="Text input" formControlName="name">
       </div>
+      <p *ngIf="editForm.get('name').touched && editForm.get('name').invalid" class="help is-danger">This email is invalid</p>
     </div>
     <div class="field">
       <label class="label">Birth id</label>
       <div class="control">
-        <input class="input" [ngClass]="{'is-danger': editForm.get('birthId').invalid}"  type="text" placeholder="Text input" formControlName="birthId">
-        <p *ngIf="editForm.get('birthId').touched && editForm.get('birthId').invalid" class="is-danger">Personnummer er obligatorisk, må ha korrekt format og bestå av 11 siffer</p>
+        <input class="input" [ngClass]="{'is-danger': editForm.get('birthId').invalid}" type="text" placeholder="Text input" formControlName="birthId">
+        <p *ngIf="editForm.get('birthId').touched && editForm.get('birthId').invalid" class="help is-danger">Personnummer er obligatorisk, må ha korrekt format og bestå av 11 siffer</p>
       </div>
     </div>
 
     <div class="field">
       <label class="label">Username</label>
-      <div class="control" >
-        <input class="input " type="text" placeholder="Text input"  formControlName="userName">
+      <div class="control">
+        <input class="input " type="text" placeholder="Text input" formControlName="username">
         
-      </div>      
+          <p *ngIf="usernameControl.touched && usernameControl.errors?.required" class="help is-danger">
+            Username is required.
+          </p>
+          <p *ngIf="usernameControl.errors?.minlength" class="help is-danger">
+            Username must be at least 6 characters long.
+          </p>
+          <p *ngIf="usernameControl.errors?.maxlength" class="help is-danger">
+            ... but not longer than 10
+          </p>
+        
+
+      </div>
     </div>
 
     <div class="field">
       <label class="label">Email</label>
       <div class="control">
-        <input #email class="input" type="email" placeholder="Email input"  formControlName="email">
-        
+        <input class="input" type="email" placeholder="Email input" formControlName="email">
+
       </div>
-      <p *ngIf="email.invalid" class="help is-danger">This email is invalid</p>
+      <p *ngIf="editForm.get('email').touched && editForm.get('email').invalid" class="help is-danger">This email is invalid</p>
     </div>
 
     <div class="field">
       <label class="label">User Type</label>
       <div class="control">
-        <div class="select" >
+        <div class="select">
           <select formControlName="userType">
             <option *ngFor="let t of userTypes" [value]="t">{{ t }}</option>
-           
+
           </select>
         </div>
       </div>
@@ -50,13 +62,14 @@
     <div class="field">
       <label class="label">Comment</label>
       <div class="control">
-        <textarea class="textarea" placeholder="Textarea" formControlName="comment"></textarea>
+        <textarea class="textarea" placeholder="Textarea" formControlName="comment" maxlength="140"></textarea>
       </div>
-    </div>    
+      {{ charCount }} of {{ totalCharsAllowed }}
+    </div>
 
     <div class="field is-grouped">
       <div class="control">
-        <button class="button is-success" (click)="save()" [disabled]="editForm.invalid" >Submit</button>
+        <button class="button is-success" (click)="save()" [disabled]="editForm.invalid">Submit</button>
       </div>
       <div class="control">
         <button class="button is-warning" (click)="resetForm()">Cancel</button>
@@ -67,51 +80,4 @@
 
 </section>
 
-<section class="section">
-  <div class="columns">
-    <div class="column">
-        <pre>
-            <table>            
-                <tbody>
-                    
-                    <tr>
-                        <td>Valid</td>
-                        <td>:</td>
-                        <td>{{editForm?.valid}}</td>
-                    </tr>
-                    <tr>
-                        <td>Dirty</td>
-                        <td>:</td>
-                        <td>{{editForm?.dirty}}</td>
-                    </tr>
-                    <tr>
-                        <td>Touched</td>
-                        <td>:</td>
-                        <td>{{editForm?.touched}}</td>
-                    </tr>
-                    <tr>
-                        <td>Untouched</td>
-                        <td>:</td>
-                        <td>{{editForm?.untouched}}</td>
-                    </tr>
-                    <tr>
-                        <td>Prisine</td>
-                        <td>:</td>
-                        <td>{{editForm?.pristine}}</td>
-                    </tr>
-                    <!--<tr *ngIf="isReactiveForm">
-                    <td>Has errors</td>
-                    <td>:</td>
-                    <td>{{form?.hasError}}</td>
-                </tr>-->
-        
-                </tbody>
-            </table>
-        </pre>
-    </div>
-    <div class="column">
-        <pre>{{editForm.value | json}}</pre>
-    </div>
-  </div>
-  
-</section>
+<app-form-info [form]="editForm"></app-form-info>
