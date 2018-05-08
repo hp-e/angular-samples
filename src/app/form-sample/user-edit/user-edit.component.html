@@ -1,3 +1,68 @@
-<p>
-  user-edit works!
-</p>
+<section>
+  <button class="button is-large is-success" (click)="getUserData()">Get data</button>
+</section>
+
+<section class="section">
+  <form #userForm novalidate [formGroup]="editForm">
+    <div class="field">
+      <label class="label">Name</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Text input" formControlName="name">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Username</label>
+      <div class="control">
+        <input class="input " type="text" placeholder="Text input"  formControlName="userName">
+        
+      </div>      
+    </div>
+
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control">
+        <input #email class="input" type="email" placeholder="Email input"  formControlName="email">
+        
+      </div>
+      <p *ngIf="email.invalid" class="help is-danger">This email is invalid</p>
+    </div>
+
+    <div class="field">
+      <label class="label">User Type</label>
+      <div class="control">
+        <div class="select">
+          <select>
+            <option *ngFor="let t of userTypes" [value]="t">{{ t }}</option>
+           
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Comment</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="Textarea" formControlName="comment"></textarea>
+      </div>
+    </div>    
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-success" (click)="save()" [disabled]="editForm.invalid" >Submit</button>
+      </div>
+      <div class="control">
+        <button class="button is-warning" (click)="resetForm()">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+
+</section>
+
+<section class="section">
+  <pre>
+    Valid: {{ editForm.valid}}
+    <br>Invalid: {{ editForm.invalid}}
+  </pre>
+</section>
