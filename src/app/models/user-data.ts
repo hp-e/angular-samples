@@ -5,4 +5,6 @@ export interface UserData {
     comment?: string;
     email: string;
     userType?: string;
+    birthId: string;
+
 }

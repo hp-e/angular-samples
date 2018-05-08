@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserData } from '../../models/user-data';
+import { CustomValidators } from '../../shared/custom-validators';
+
+// import 
+
 
 @Component({
   selector: 'app-user-edit',
@@ -28,7 +32,8 @@ export class UserEditComponent implements OnInit {
       userName: [undefined, [Validators.required]],
       userType: ['Baduser'],
       email: [undefined, [Validators.required, Validators.email]],
-      comment: undefined
+      comment: undefined,
+      birthId: [undefined, [CustomValidators.birthIdValidator, Validators.required]]
     });
   }
   resetForm() {
@@ -47,10 +52,11 @@ export class UserEditComponent implements OnInit {
       comment: data.comment,
       userType: data.userType,
       email: data.email,
-      
+      birthId: data.birthId
     });
   }
 
+  // pnr er generert her: http://prag.matisk.com/ssn/
 
   getUserData() {
     const data: UserData = {
@@ -58,7 +64,8 @@ export class UserEditComponent implements OnInit {
       name: 'test testesen',
       username: 'tasty007',
       email: 'test@testesen.no',
-      userType: 'Superuser'
+      userType: 'Superuser',
+      birthId: '05057547571'
     };
 
     this.onDataRetrieved(data);

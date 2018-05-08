@@ -10,10 +10,17 @@
         <input class="input" type="text" placeholder="Text input" formControlName="name">
       </div>
     </div>
+    <div class="field">
+      <label class="label">Birth id</label>
+      <div class="control">
+        <input class="input" [ngClass]="{'is-danger': editForm.get('birthId').invalid}"  type="text" placeholder="Text input" formControlName="birthId">
+        <p *ngIf="editForm.get('birthId').touched && editForm.get('birthId').invalid" class="is-danger">Personnummer er obligatorisk, må ha korrekt format og bestå av 11 siffer</p>
+      </div>
+    </div>
 
     <div class="field">
       <label class="label">Username</label>
-      <div class="control">
+      <div class="control" >
         <input class="input " type="text" placeholder="Text input"  formControlName="userName">
         
       </div>      
@@ -31,8 +38,8 @@
     <div class="field">
       <label class="label">User Type</label>
       <div class="control">
-        <div class="select">
-          <select>
+        <div class="select" >
+          <select formControlName="userType">
             <option *ngFor="let t of userTypes" [value]="t">{{ t }}</option>
            
           </select>
@@ -61,8 +68,50 @@
 </section>
 
 <section class="section">
-  <pre>
-    Valid: {{ editForm.valid}}
-    <br>Invalid: {{ editForm.invalid}}
-  </pre>
+  <div class="columns">
+    <div class="column">
+        <pre>
+            <table>            
+                <tbody>
+                    
+                    <tr>
+                        <td>Valid</td>
+                        <td>:</td>
+                        <td>{{editForm?.valid}}</td>
+                    </tr>
+                    <tr>
+                        <td>Dirty</td>
+                        <td>:</td>
+                        <td>{{editForm?.dirty}}</td>
+                    </tr>
+                    <tr>
+                        <td>Touched</td>
+                        <td>:</td>
+                        <td>{{editForm?.touched}}</td>
+                    </tr>
+                    <tr>
+                        <td>Untouched</td>
+                        <td>:</td>
+                        <td>{{editForm?.untouched}}</td>
+                    </tr>
+                    <tr>
+                        <td>Prisine</td>
+                        <td>:</td>
+                        <td>{{editForm?.pristine}}</td>
+                    </tr>
+                    <!--<tr *ngIf="isReactiveForm">
+                    <td>Has errors</td>
+                    <td>:</td>
+                    <td>{{form?.hasError}}</td>
+                </tr>-->
+        
+                </tbody>
+            </table>
+        </pre>
+    </div>
+    <div class="column">
+        <pre>{{editForm.value | json}}</pre>
+    </div>
+  </div>
+  
 </section>
